@@ -1,0 +1,149 @@
+//colors
+$black: black;
+$color_silver_chalice_approx: #aaa;
+$color_steel_blue_approx: #3d85c6;
+$color_alto_approx: #ddd;
+$color_monza_approx: #bb021e;
+$color_tundora_approx: #444;
+$color_gallery_approx: #eee;
+$color_celeste_approx: #ccc;
+$color_storm_dust_approx: #666;
+
+//fonts
+$font_0: zocial;
+$font_1: sans-serif;
+$font_2: Roboto;
+$font_3: Roboto condensed;
+
+a {
+	color: $color_steel_blue_approx;
+	font-weight: 300;
+	text-decoration: none;
+	&:hover {
+		color: $color_steel_blue_approx;
+		text-decoration: underline;
+		[class*="zocial-"]:before {
+			color: $color_steel_blue_approx;
+		}
+	}
+	&#viewSource {
+		border-top: 1px solid $color_alto_approx;
+		display: block;
+		margin: 1.3em 0 0 0;
+		padding: 1em 0 0;
+	}
+}
+h1 {
+	color: $color_tundora_approx;
+	font-family: $font_3, $font_1;
+	font-size: 6vw;
+	font-weight: 500;
+	margin: 0 0 1em 0;
+	a {
+		font-weight: 300;
+		white-space: nowrap;
+	}
+}
+article {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	max-width: 50em;
+	border-bottom: 1px solid $color_alto_approx;
+}
+body {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	font-family: $font_2, $font_1;
+	margin: 3vh 0;
+	text-align: center;
+}
+figcaption {
+	color: $color_monza_approx;
+	font-family: $font_3, $font_1;
+	padding: 2em 0;
+	text-align: center;
+}
+figure {
+	margin: 1em 0;
+}
+footer {
+	text-align: center;
+}
+h2 {
+	border-bottom: 1px solid $color_alto_approx;
+	color: $color_monza_approx;
+	font-family: $font_3, $font_1;
+	font-size: 5vw;
+	margin: 0 0 1em 0;
+	padding: 0 0 1em 0;
+}
+img {
+	max-width: 100%;
+}
+p {
+	color: $color_tundora_approx;
+	font-size: 1em;
+	font-weight: 300;
+	line-height: 1.6em;
+	margin: 0 auto 1em auto;
+	text-align: justify;
+	&.borderBelow {
+		border-bottom: 1px solid $color_gallery_approx;
+		padding: 0 0 1em 0;
+	}
+}
+section {
+	border-bottom: 1px solid $color_gallery_approx;
+	margin: 0 0 3vh 0;
+	&:last-of-type {
+		border-bottom: 1px solid $color_celeste_approx;
+		margin: 0 0 2em 0;
+		padding: 0 0 2em 0;
+	}
+	&#post {
+		max-width: 50em;
+		width: 90vw;
+	}
+	p:last-of-type {
+		margin: 0;
+	}
+}
+[class*="zocial-"]:before {
+	color: $black;
+	display: inline-block;
+	font-family: $font_0, $font_1;
+	//Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	text-shadow: 3px 3px 3px $color_silver_chalice_approx;
+	width: 2em;
+}
+div#social {
+	line-height: 2em;
+	a {
+		margin: 0 1em 0 0;
+		&:last-of-type {
+			margin: 0;
+		}
+	}
+}
+header:hover {
+	h1 {
+		color: $color_steel_blue_approx;
+	}
+	svg#logo {
+		fill: $color_steel_blue_approx;
+		filter: drop-shadow(3px 3px 3px $color_alto_approx);
+	}
+}
+picture#banner img {
+	margin: 0 0 2em 0;
+	max-width: 100vw;
+	width: 100vw;
+}
+svg#logo {
+	fill: $color_storm_dust_approx;
+	height: 6vw;
+	margin: 0 auto 0.5em auto;
+	width: 6vw;
+}
