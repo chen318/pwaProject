@@ -43,7 +43,7 @@ let bgQueue = new workbox.backgroundSync.QueuePlugin({
 
 bgQueue.fetchDidFail({
     request: new Request('http://localhost:8000'),
-  });
+});
 
 const requestWrapper = new workbox.runtimeCaching.RequestWrapper({
   plugins: [bgQueue],

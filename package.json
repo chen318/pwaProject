@@ -19,6 +19,7 @@
     "lodash": "^4.17.4",
     "vue": "^2.1.10",
     "workbox-background-sync": "^2.0.3",
+    "workbox-cli": "^2.1.0",
     "workbox-routing": "^2.1.0",
     "workbox-runtime-caching": "^2.0.3",
     "workbox-sw": "^2.1.0"

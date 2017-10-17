@@ -29,11 +29,15 @@ workboxSW.precache([
   },
   {
     "url": "js/app.js",
-    "revision": "2f7a348c1d343e7dcbc80ece62325f3a"
+    "revision": "03eb4cf4ebf81fa7211059f4c851f1d1"
+  },
+  {
+    "url": "js/idb.js",
+    "revision": "219c0a6f46dbe946422097d9de2b1961"
   },
   {
     "url": "js/workbox/sw.js",
-    "revision": "76fa771b3f2f1175ca0a5b6d1bcc8e74"
+    "revision": "bd7ebbe06245b280f0e246d2b6653a98"
   },
   {
     "url": "js/workbox/workbox-background-sync.prod.v2.0.3.js",
@@ -53,7 +57,7 @@ workboxSW.precache([
   },
   {
     "url": "service-worker.js",
-    "revision": "66234fbcc4523ad32a839fe8dedc62f2"
+    "revision": "344883f77f4e2c079c30c0dd8295191f"
   }
 ]);
 
@@ -74,7 +78,9 @@ let bgQueue = new workbox.backgroundSync.QueuePlugin({
   },
 });
 
-
+bgQueue.fetchDidFail({
+    request: new Request('http://localhost:8000'),
+});
 
 const requestWrapper = new workbox.runtimeCaching.RequestWrapper({
   plugins: [bgQueue],
