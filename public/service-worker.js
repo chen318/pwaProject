@@ -37,7 +37,7 @@ workboxSW.precache([
   },
   {
     "url": "js/workbox/sw.js",
-    "revision": "bd7ebbe06245b280f0e246d2b6653a98"
+    "revision": "f8c481f7210b6b5060578c5c44c51fc7"
   },
   {
     "url": "js/workbox/workbox-background-sync.prod.v2.0.3.js",
@@ -57,33 +57,67 @@ workboxSW.precache([
   },
   {
     "url": "service-worker.js",
-    "revision": "344883f77f4e2c079c30c0dd8295191f"
+    "revision": "7880d107df863bf86141b214ae33f192"
   }
 ]);
 
 workboxSW.router.registerRoute('/', workboxSW.strategies.networkFirst());
 
-let bgQueue = new workbox.backgroundSync.QueuePlugin({
+let msgQueue = new workbox.backgroundSync.QueuePlugin({
   callbacks: {
     replayDidSucceed: async(hash, res) => {
       self.registration.showNotification('Background sync demo', {
-        body: 'Product has been purchased.',
-        icon: '/images/shop-icon-384.png',
+        body: 'Messages here'
        });
       console.log(res);
     },
-    replayDidFail: (hash) => { console.log(hash);},
-    requestWillEnqueue: (reqData) => { console.log(reqData);},
-    requestWillDequeue: (reqData) => { console.log(reqData);},
+    replayDidFail: (hash) => { console.log('replayDidFail')},
+    requestWillEnqueue: (reqData) => { console.log('Enqueue')},
+    requestWillDequeue: (reqData) => { console.log('Dequeue')},
   },
+  queueName: 'messages'
 });
 
-bgQueue.fetchDidFail({
-    request: new Request('http://localhost:8000'),
+self.addEventListener('fetch', function(e) {
+  if (!e.request.url.startsWith('http://localhost:8000/messages')) {
+    return;
+  }
+
+  const clone = e.request.clone();
+  msgQueue.fetchDidFail({
+    request: clone,
+  });
 });
+
+let transQueue = new workbox.backgroundSync.QueuePlugin({
+  callbacks: {
+    replayDidSucceed: async(hash, res) => {
+      self.registration.showNotification('Background sync demo', {
+        body: 'Transactions here.'
+       });
+      console.log(res);
+    },
+    replayDidFail: (hash) => { console.log('replayDidFail')},
+    requestWillEnqueue: (reqData) => { console.log('Enqueue')},
+    requestWillDequeue: (reqData) => { console.log('Dequeue')},
+  },
+  queueName: 'transactions'
+});
+
+self.addEventListener('fetch', function(e) {
+  if (!e.request.url.startsWith('http://localhost:8000/transactions')) {
+    return;
+  }
+
+  const clone = e.request.clone();
+  transQueue.fetchDidFail({
+    request: clone,
+  });
+});
+
 
 const requestWrapper = new workbox.runtimeCaching.RequestWrapper({
-  plugins: [bgQueue],
+  plugins: [transQueue,msgQueue],
 });
 
 const route = new workbox.routing.RegExpRoute({

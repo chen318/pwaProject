@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/messages', function () {
 	return 'messages here';
 });
+
+Route::get('/transactions', function () {
+	return 'transactions here';
+});

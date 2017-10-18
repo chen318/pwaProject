@@ -6,19 +6,23 @@
 </head>
 <body>
   <div id="connectionStatus"></div>
-  <p>Click me to make Http request</p>
-  <button id="requestButton">Make A request</button>
+  <p>Click me to make messages request</p>
+  <button id="requestMsgButton">Make Msg request</button>
+  <p>Click me to make transaction request</p>
+  <button id="requestTransButton">Make Transaction request</button>
 
   <script type="text/javascript">
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('service-worker.js');
     }
-    document.getElementById('requestButton')
+    document.getElementById('requestMsgButton')
       .addEventListener('click', () => {
         fetch('/messages')
-          .then((response)=> console.log(response))
-          .catch((e) => console.log(e));
+      });
+    document.getElementById('requestTransButton')
+      .addEventListener('click', () => {
+        fetch('/transactions')
       });
   </script>
 </body>
