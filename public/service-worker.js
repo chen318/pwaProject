@@ -3788,16 +3788,16 @@ workboxSW.precache([{
   "revision": "a1e919d488f317023e86717d8532cc84"
 }, {
   "url": "js/app.js",
-  "revision": "ff5a88b479d7f0b6856af72e5f2490da"
+  "revision": "a808af084c637bd3d404a29772414498"
 }, {
   "url": "js/idb.js",
   "revision": "219c0a6f46dbe946422097d9de2b1961"
 }, {
   "url": "js/sw.js",
-  "revision": "597a4f279122ec2651f94a5728f0a8b6"
+  "revision": "a6e892c23aad2ae9427cd29dfe4c30db"
 }, {
   "url": "service-worker.js",
-  "revision": "fd9d90a7cb099524cb79b6af614b974b"
+  "revision": "c0464aa37f20f2a5316b977978f31f82"
 }]);
 
 workboxSW.router.registerRoute('/', workboxSW.strategies.networkFirst());
@@ -3895,6 +3895,8 @@ var transQueue = new __WEBPACK_IMPORTED_MODULE_1_workbox_background_sync__["a" /
 
 self.addEventListener('fetch', function (e) {
   if (!e.request.url.startsWith('http://localhost:8000/transactions')) {
+    console.log(e.request.url);
+    console.log(e.request.method);
     return;
   }
 

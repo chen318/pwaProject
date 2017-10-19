@@ -69,6 +69,8 @@ let transQueue = new QueuePlugin({
 
 self.addEventListener('fetch', function(e) {
   if (!e.request.url.startsWith('http://localhost:8000/transactions')) {
+    console.log(e.request.url);
+    console.log(e.request.method);
     return;
   }
 
