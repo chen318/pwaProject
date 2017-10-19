@@ -3,8 +3,8 @@ module.exports = {
   "globPatterns": [
     "**/*.{css,js}"
   ],
-  "swSrc": "public/js/workbox/sw.js",
-  "swDest": "public/service-worker.js",
+  "swSrc": "public/js/sw.js",
+  "swDest": "resources/assets/js/service-worker.js",
   "globIgnores": [
     "../workbox-cli-config.js"
   ]

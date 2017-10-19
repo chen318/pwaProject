@@ -1,8 +1,8 @@
-importScripts('js/workbox/workbox-sw.prod.v2.1.0.js');
-importScripts('js/workbox/workbox-background-sync.prod.v2.0.3.js');
-importScripts('js/workbox/workbox-runtime-caching.prod.v2.0.3.js');
-importScripts('js/workbox/workbox-routing.prod.v2.1.0.js');
-
+import WorkboxSW from 'workbox-sw';
+import {Queue, QueuePlugin} from 'workbox-background-sync';
+import {RequestWrapper, NetworkOnly} from 'workbox-runtime-caching';
+import {RegExpRoute, Router} from 'workbox-routing';
+require('babel-polyfill');
 /**
  * DO NOT EDIT THE FILE MANIFEST ENTRY
  *
@@ -21,12 +21,33 @@ importScripts('js/workbox/workbox-routing.prod.v2.1.0.js');
  * accordingly.
  */
 
-const workboxSW = new self.WorkboxSW();
-workboxSW.precache([]);
+const workboxSW = new WorkboxSW();
+workboxSW.precache([
+  {
+    "url": "css/app.css",
+    "revision": "a1e919d488f317023e86717d8532cc84"
+  },
+  {
+    "url": "js/app.js",
+    "revision": "ff5a88b479d7f0b6856af72e5f2490da"
+  },
+  {
+    "url": "js/idb.js",
+    "revision": "219c0a6f46dbe946422097d9de2b1961"
+  },
+  {
+    "url": "js/sw.js",
+    "revision": "597a4f279122ec2651f94a5728f0a8b6"
+  },
+  {
+    "url": "service-worker.js",
+    "revision": "fd9d90a7cb099524cb79b6af614b974b"
+  }
+]);
 
 workboxSW.router.registerRoute('/', workboxSW.strategies.networkFirst());
 
-let msgQueue = new workbox.backgroundSync.QueuePlugin({
+let msgQueue = new QueuePlugin({
   callbacks: {
     replayDidSucceed: async(hash, res) => {
       self.registration.showNotification('Background sync demo', {
@@ -36,7 +57,7 @@ let msgQueue = new workbox.backgroundSync.QueuePlugin({
     },
     replayDidFail: (hash) => { console.log('replayDidFail')},
     requestWillEnqueue: (reqData) => { console.log('Enqueue')},
-    requestWillDequeue: (reqData) => { console.log('Dequeue')},
+    requestWillDequeue: (reqData) => { console.log(reqData)},
   },
   queueName: 'messages'
 });
@@ -52,7 +73,7 @@ self.addEventListener('fetch', function(e) {
   });
 });
 
-let transQueue = new workbox.backgroundSync.QueuePlugin({
+let transQueue = new QueuePlugin({
   callbacks: {
     replayDidSucceed: async(hash, res) => {
       self.registration.showNotification('Background sync demo', {
@@ -62,7 +83,7 @@ let transQueue = new workbox.backgroundSync.QueuePlugin({
     },
     replayDidFail: (hash) => { console.log('replayDidFail')},
     requestWillEnqueue: (reqData) => { console.log('Enqueue')},
-    requestWillDequeue: (reqData) => { console.log('Dequeue')},
+    requestWillDequeue: (reqData) => { console.log(reqData)},
   },
   queueName: 'transactions'
 });
@@ -78,15 +99,14 @@ self.addEventListener('fetch', function(e) {
   });
 });
 
-
-const requestWrapper = new workbox.runtimeCaching.RequestWrapper({
+const requestWrapper = new RequestWrapper({
   plugins: [transQueue,msgQueue],
 });
 
-const route = new workbox.routing.RegExpRoute({
+const route = new RegExpRoute({
   regExp: new RegExp('^http://localhost:8000'),
-  handler: new workbox.runtimeCaching.NetworkOnly({requestWrapper}),
+  handler: new NetworkOnly({requestWrapper}),
 });
 
-const router = new workbox.routing.Router();
+const router = new Router();
 router.registerRoute({route});

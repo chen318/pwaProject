@@ -1,4 +1,5 @@
 {
+    "/service-worker.js": "/service-worker.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css"
 }
